@@ -68,28 +68,6 @@ export const membershipInfo = defineType({
     }),
 
     defineField({
-      name: 'entryFee',
-      title: 'Stojamasis įnašas (eurais)',
-      type: 'number',
-      validation: (Rule) => Rule.required().min(0),
-    }),
-    defineField({
-      name: 'annualFeeDescription',
-      title: 'Metinio įnašo aprašymas',
-      type: 'text',
-      rows: 2,
-      placeholder: 'Pvz.: Nustatomas pagal 2022 m. gruodžio 5 d. konferencijos sprendimą',
-    }),
-    defineField({
-      name: 'feeImage',
-      title: 'Nario mokestis – paveikslėlis (nebūtina)',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-
-    defineField({
       name: 'requiredDocuments',
       title: 'Kokie dokumentai reikalingi? – dokumentų sąrašas',
       type: 'array',

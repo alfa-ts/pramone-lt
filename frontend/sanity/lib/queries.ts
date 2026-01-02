@@ -253,14 +253,6 @@ export const membershipInfoQuery = defineQuery(`
       description3,
       description4
     },
-    entryFee,
-    annualFeeDescription,
-    "feeImage": feeImage{
-      asset->{
-        _id,
-        url
-      }
-    },
     requiredDocuments[] {
       _key,
       title,
