@@ -111,7 +111,6 @@ export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
     ourHistory,
     kkpdaToday,
-    presidentMessage,
     "services": services[] {
       _key,
       title,
@@ -123,6 +122,12 @@ export const istorijaQuery = defineQuery(`
       startYear,
       endYear
     }
+  }
+`);
+
+export const valdymasSettingsQuery = defineQuery(`
+  *[_id == "valdymasSettings"][0] {
+    presidentMessage
   }
 `);
 

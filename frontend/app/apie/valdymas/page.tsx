@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { leadershipQuery, istorijaQuery } from "@/sanity/lib/queries";
+import { leadershipQuery, valdymasSettingsQuery } from "@/sanity/lib/queries";
 import { GovernanceStructureCard } from "@/app/components/GovernanceStructureCard";
 import { LeadershipMemberCard } from "@/app/components/LeadershipMemberCard";
 import PortableText from "@/app/components/PortableText";
@@ -22,12 +22,12 @@ interface LeadershipMember {
 }
 
 export default async function ValdymasPage() {
-  const [{ data: leadershipData }, { data: istorijaData }] = await Promise.all([
+  const [{ data: leadershipData }, { data: valdymasSettings }] = await Promise.all([
     sanityFetch({ query: leadershipQuery }),
-    sanityFetch({ query: istorijaQuery }),
+    sanityFetch({ query: valdymasSettingsQuery }),
   ]);
 
-  const presidentMessage = istorijaData?.presidentMessage;
+  const presidentMessage = valdymasSettings?.presidentMessage;
 
   // Group leadership data by role
   const president = leadershipData?.filter(

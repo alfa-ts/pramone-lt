@@ -20,11 +20,6 @@ export const istorija = defineType({
       description: 'KKPDA šiandien skyriaus turinys',
     }),
     defineField({
-      name: 'presidentMessage',
-      title: 'Prezidento žodis',
-      type: 'blockContent',
-    }),
-    defineField({
       name: 'services',
       title: 'Teikiamos paslaugos',
       type: 'array',
