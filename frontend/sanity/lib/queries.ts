@@ -106,6 +106,7 @@ export const singleNewsQuery = defineQuery(`
 
 export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
+    turnover,
     ourHistory,
     "services": services[] {
       _key,

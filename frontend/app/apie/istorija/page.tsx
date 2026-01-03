@@ -24,6 +24,7 @@ export default async function IstorijaPage() {
   const pastPresidents = data?.pastPresidents || [];
   const services = data?.services || [];
   const ourHistory = data?.ourHistory;
+  const turnover = data?.turnover;
 
   // Calculate years of activity (from 1989 to current year)
   const foundingYear = 1989;
@@ -126,8 +127,8 @@ export default async function IstorijaPage() {
                 <CalendarIcon className="w-6 h-6 text-white" />
               </div>
             </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">500+</div>
-            <div className="text-sm text-[#4a5565]">Renginių</div>
+            <div className="text-3xl font-bold text-[#101828] mb-1">{turnover || "0"} mlrd.</div>
+            <div className="text-sm text-[#4a5565]">Pajamų</div>
           </div>
         </div>
 

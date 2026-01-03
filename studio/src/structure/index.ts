@@ -1,4 +1,4 @@
-import {UsersIcon} from '@sanity/icons'
+import {FolderIcon} from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
 /**
@@ -32,7 +32,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       // Valdymas - combined section with settings and leadership members
       S.listItem()
         .title('Valdymas')
-        .icon(UsersIcon)
+        .icon(FolderIcon)
         .child(
           S.list()
             .title('Valdymas')
