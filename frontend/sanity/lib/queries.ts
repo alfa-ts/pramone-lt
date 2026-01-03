@@ -170,7 +170,6 @@ export const partnersQuery = defineQuery(`
     "agreements": partnersAgreements[] {
       _key,
       title,
-      "logo": logo.asset->url,
       extra
     }
   }

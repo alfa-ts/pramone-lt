@@ -130,6 +130,15 @@ export type Member = {
   };
 };
 
+export type ValdymasSettings = {
+  _id: string;
+  _type: "valdymasSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  presidentMessage?: BlockContent;
+};
+
 export type Veikla = {
   _id: string;
   _type: "veikla";
@@ -208,9 +217,8 @@ export type Istorija = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  turnover?: string;
   ourHistory?: BlockContent;
-  kkpdaToday?: BlockContent;
-  presidentMessage?: BlockContent;
   services?: Array<{
     title: string;
     description?: string;
@@ -242,20 +250,6 @@ export type MembershipInfo = {
     _type: "benefitItem";
     _key: string;
   }>;
-  entryFee: number;
-  annualFeeDescription?: string;
-  feeImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
   requiredDocuments?: Array<{
     title: string;
     description?: string;
@@ -272,95 +266,6 @@ export type MembershipInfo = {
     _type: "documentItem";
     _key: string;
   }>;
-};
-
-export type Istatai = {
-  _id: string;
-  _type: "istatai";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  statutesFile?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
-    media?: unknown;
-    _type: "file";
-  };
-  ethicsFile?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-    };
-    media?: unknown;
-    _type: "file";
-  };
-};
-
-export type ContactInfo = {
-  _id: string;
-  _type: "contactInfo";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  address?: string;
-  phone?: string;
-  email?: string;
-  googleAddress?: string;
-};
-
-export type Settings = {
-  _id: string;
-  _type: "settings";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  description?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal";
-    listItem?: never;
-    markDefs?: Array<{
-      linkType?: "href" | "news";
-      href?: string;
-      news?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "news";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
-  ogImage?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    metadataBase?: string;
-    _type: "image";
-  };
 };
 
 export type News = {
@@ -428,6 +333,46 @@ export type Slug = {
   _type: "slug";
   current: string;
   source?: string;
+};
+
+export type Istatai = {
+  _id: string;
+  _type: "istatai";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  statutesFile?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+  ethicsFile?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  };
+};
+
+export type ContactInfo = {
+  _id: string;
+  _type: "contactInfo";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  googleAddress?: string;
 };
 
 export type SanityAssistInstructionTask = {
@@ -647,7 +592,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | Leadership | SanityImageCrop | SanityImageHotspot | Member | Veikla | Partneriai | Istorija | MembershipInfo | Istatai | ContactInfo | Settings | News | Slug | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | Leadership | SanityImageCrop | SanityImageHotspot | Member | ValdymasSettings | Veikla | Partneriai | Istorija | MembershipInfo | News | Slug | Istatai | ContactInfo | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: leadershipQuery
@@ -768,7 +713,7 @@ export type IstorijaQueryResult = {
   services: null;
   pastPresidents: null;
 } | {
-  turnover: null;
+  turnover: string | null;
   ourHistory: BlockContent | null;
   services: Array<{
     _key: string;
@@ -819,7 +764,7 @@ export type StrategicDirectionsQueryResult = {
   }> | null;
 } | null;
 // Variable: partnersQuery
-// Query: *[_id == "partneriai"][0] {    "cooperate": partnersCooperate[] {      _key,      title,      "logo": logo.asset->url,      extra    },    "agreements": partnersAgreements[] {      _key,      title,      "logo": logo.asset->url,      extra    }  }
+// Query: *[_id == "partneriai"][0] {    "cooperate": partnersCooperate[] {      _key,      title,      "logo": logo.asset->url,      extra    },    "agreements": partnersAgreements[] {      _key,      title,      extra    }  }
 export type PartnersQueryResult = {
   cooperate: null;
   agreements: null;
@@ -833,7 +778,6 @@ export type PartnersQueryResult = {
   agreements: Array<{
     _key: string;
     title: string;
-    logo: string | null;
     extra: string | null;
   }> | null;
 } | null;
@@ -910,7 +854,7 @@ declare module "@sanity/client" {
     "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;
     "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo{\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n": MembersQueryResult;
     "\n  *[_id == \"veikla\"][0] {\n    misija,\n    vizija,\n    \"strategicDirections\": strategicDirections[] {\n      _key,\n      title\n    }\n  }\n": StrategicDirectionsQueryResult;
-    "\n  *[_id == \"partneriai\"][0] {\n    \"cooperate\": partnersCooperate[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    },\n    \"agreements\": partnersAgreements[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    }\n  }\n": PartnersQueryResult;
+    "\n  *[_id == \"partneriai\"][0] {\n    \"cooperate\": partnersCooperate[] {\n      _key,\n      title,\n      \"logo\": logo.asset->url,\n      extra\n    },\n    \"agreements\": partnersAgreements[] {\n      _key,\n      title,\n      extra\n    }\n  }\n": PartnersQueryResult;
     "\n  *[_type == \"contactInfo\"][0] {\n    address,\n    phone,\n    email,\n    googleAddress\n  }\n": ContactInfoQueryResult;
     "\n  *[_type == \"istatai\"][0] {\n    \"statutesUrl\": statutesFile.asset->url,\n    \"statutesName\": statutesFile.asset->originalFilename,\n    \"ethicsUrl\": ethicsFile.asset->url,\n    \"ethicsName\": ethicsFile.asset->originalFilename\n  }\n": LegalDocumentsQueryResult;
     "\n  *[_id == \"veikla\"][0] {\n    \"reports\": ataskaitos[] {\n      _key,\n      period,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename\n    }\n  }\n": ActivityReportsQueryResult;
