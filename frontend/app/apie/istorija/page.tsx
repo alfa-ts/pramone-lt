@@ -1,33 +1,16 @@
 import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
-import {
-  istorijaQuery,
-  membersCountQuery,
-} from "@/sanity/lib/queries";
+import { istorijaQuery } from "@/sanity/lib/queries";
 import type { IstorijaQueryResult } from "@/sanity.types";
 import { HistoryTimeline } from "@/app/components/HistoryTimeline";
 import PortableText from "@/app/components/PortableText";
-import {
-  Users,
-  TrendingUp,
-  Calendar as CalendarIcon,
-} from "lucide-react";
 
 export default async function IstorijaPage() {
-  const [{ data: istorijaData }, { data: membersCount }] = await Promise.all([
-    sanityFetch({ query: istorijaQuery }),
-    sanityFetch({ query: membersCountQuery }),
-  ]);
+  const { data: istorijaData } = await sanityFetch({ query: istorijaQuery });
 
   const data = istorijaData as IstorijaQueryResult;
   const pastPresidents = data?.pastPresidents || [];
   const ourHistory = data?.ourHistory;
-  const turnover = data?.turnover;
-
-  // Calculate years of activity (from 1989 to current year)
-  const foundingYear = 1989;
-  const currentYear = new Date().getFullYear();
-  const yearsOfActivity = currentYear - foundingYear;
 
   return (
     <div className="min-h-screen bg-white">
@@ -94,42 +77,6 @@ export default async function IstorijaPage() {
             </article>
           </div>
         )}
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 p-8 bg-gray-50 rounded-2xl border border-gray-100">
-          <div className="text-center">
-            <div className="flex justify-center mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#FE9A00] to-[#E17100] rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">
-              {membersCount || 0}+
-            </div>
-            <div className="text-sm text-[#4a5565]">Narių</div>
-          </div>
-          <div className="text-center">
-            <div className="flex justify-center mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#FE9A00] to-[#E17100] rounded-xl flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-white" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">
-              {yearsOfActivity}+
-            </div>
-            <div className="text-sm text-[#4a5565]">Metų patirtis</div>
-          </div>
-          <div className="text-center">
-            <div className="flex justify-center mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-[#FE9A00] to-[#E17100] rounded-xl flex items-center justify-center">
-                <CalendarIcon className="w-6 h-6 text-white" />
-              </div>
-            </div>
-            <div className="text-3xl font-bold text-[#101828] mb-1">{turnover || "0"} mlrd.</div>
-            <div className="text-sm text-[#4a5565]">Pajamų</div>
-          </div>
-        </div>
-
       </div>
 
       {/* Timeline Section */}
@@ -150,8 +97,6 @@ export default async function IstorijaPage() {
           </div>
         </div>
       )}
-
-
     </div>
   );
 }

@@ -6,7 +6,8 @@ export const apieKkpdaQuery = defineQuery(`
     kaAtstovaujame,
     musuMisija,
     musuVizija,
-    partneryste,
+    kurEiname,
+    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,
     darboVietos,
     apyvarta,
     organizacijos[] {
@@ -123,7 +124,6 @@ export const singleNewsQuery = defineQuery(`
 
 export const istorijaQuery = defineQuery(`
   *[_id == "istorija"][0] {
-    turnover,
     ourHistory,
     "pastPresidents": pastPresidents[] {
       _key,

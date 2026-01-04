@@ -596,13 +596,14 @@ export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockCont
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: apieKkpdaQuery
-// Query: *[_id == "apieKkpda"][0] {    kasEsame,    kaAtstovaujame,    musuMisija,    musuVizija,    partneryste,    darboVietos,    apyvarta,    organizacijos[] {      pavadinimas,      aprasymas,      "logoUrl": logo.asset->url    }  }
+// Query: *[_id == "apieKkpda"][0] {    kasEsame,    kaAtstovaujame,    musuMisija,    musuVizija,    kurEiname,    "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,    darboVietos,    apyvarta,    organizacijos[] {      pavadinimas,      aprasymas,      "logoUrl": logo.asset->url    }  }
 export type ApieKkpdaQueryResult = {
   kasEsame: null;
   kaAtstovaujame: null;
   musuMisija: null;
   musuVizija: null;
-  partneryste: null;
+  kurEiname: null;
+  kurEinamePaveikslasUrl: null;
   darboVietos: null;
   apyvarta: null;
   organizacijos: null;
@@ -718,13 +719,11 @@ export type SingleNewsQueryResult = {
   }> | null;
 } | null;
 // Variable: istorijaQuery
-// Query: *[_id == "istorija"][0] {    turnover,    ourHistory,    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
+// Query: *[_id == "istorija"][0] {    ourHistory,    "pastPresidents": pastPresidents[] {      _key,      name,      startYear,      endYear    }  }
 export type IstorijaQueryResult = {
-  turnover: null;
   ourHistory: null;
   pastPresidents: null;
 } | {
-  turnover: string | null;
   ourHistory: BlockContent | null;
   pastPresidents: Array<{
     _key: string;
@@ -856,13 +855,13 @@ export type NarystesNaudosQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    partneryste,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
+    "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    kurEiname,\n    \"kurEinamePaveikslasUrl\": kurEinamePaveikslas.asset->url,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
     "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo{\n      asset->{\n        _id,\n        url\n      }\n    },\n    phone,\n    email\n  }\n": LeadershipQueryResult;
     "\n  *[_type == \"news\"] | order(publishedAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt\n  }\n": NewsQueryResult;
     "\n  *[_type == \"news\"] | order(isFeatured desc, publishedAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
     "\n  *[_type == \"news\"] | order(publishedAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    publishedAt\n  }\n": RecentNewsQueryResult;
     "\n  *[_type == \"news\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    type,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation,\n    entrance,\n    registrationUrl,\n    timeSlots,\n    program,\n    \"documents\": documents[]{\n      title,\n      \"file\": file.asset->{\n        _id,\n        url,\n        originalFilename,\n        size\n      }\n    },\n    additionalInfo\n  }\n": SingleNewsQueryResult;
-    "\n  *[_id == \"istorija\"][0] {\n    turnover,\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
+    "\n  *[_id == \"istorija\"][0] {\n    ourHistory,\n    \"pastPresidents\": pastPresidents[] {\n      _key,\n      name,\n      startYear,\n      endYear\n    }\n  }\n": IstorijaQueryResult;
     "\n  *[_id == \"valdymasSettings\"][0] {\n    presidentMessage\n  }\n": ValdymasSettingsQueryResult;
     "\n  count(*[_type == \"member\"])\n": MembersCountQueryResult;
     "\n  *[_type == \"member\"] | order(lower(company) asc) {\n    _id,\n    company,\n    \"logo\": logo{\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n": MembersQueryResult;

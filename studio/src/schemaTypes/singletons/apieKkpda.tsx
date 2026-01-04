@@ -36,11 +36,20 @@ export default defineType({
       description: "Asociacijos vizija",
     },
     {
-      name: "partneryste",
-      title: "Verslo ir valstybės partnerystė",
+      name: "kurEiname",
+      title: "Kur einame",
       type: "array",
       of: [{ type: "block" }],
-      description: "Tekstas apie verslo ir valstybės partnerystę (bullet points)",
+      description: "Tekstas apie tai, kur einame",
+    },
+    {
+      name: "kurEinamePaveikslas",
+      title: "Kur einame paveikslas",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      description: "Nuotrauka šalia 'Kur einame' teksto",
     },
     {
       name: "darboVietos",

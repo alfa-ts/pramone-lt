@@ -4,16 +4,7 @@ import PortableText from "@/app/components/PortableText";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import {
-  Building2,
-  Users,
-  Handshake,
-  Diamond,
-  PieChart,
-  MapPin,
-  Phone,
-  Mail,
-} from "lucide-react";
+import { Users, Handshake, Diamond, PieChart } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Apie KKPDA | Kauno krašto pramonininkų ir darbdavių asociacija",
@@ -169,27 +160,29 @@ export default async function ApieKkpdaPage() {
             </div>
           </div>
 
-          {/* Content Grid */}
+          {/* Content Grid - Kur einame */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
             {/* Left Content */}
             <div>
-              {data?.partneryste && (
+              {data?.kurEiname && (
                 <div className="prose prose-lg max-w-none text-gray-700 prose-ul:space-y-4 prose-li:marker:text-gray-400">
-                  <PortableText value={data.partneryste as any} />
+                  <PortableText value={data.kurEiname as any} />
                 </div>
               )}
             </div>
 
             {/* Right Image */}
-            <div className="relative h-[500px] rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-              <Image
-                src="https://images.unsplash.com/photo-1758518731457-5ef826b75b3b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbHMlMjBtZWV0aW5nJTIwY29sbGFib3JhdGlvbnxlbnwxfHx8fDE3Njc1MzQ0NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080"
-                alt="Business professionals collaboration"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
+            {data?.kurEinamePaveikslasUrl && (
+              <div className="relative h-[500px] rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                <Image
+                  src={data.kurEinamePaveikslasUrl}
+                  alt="Kur einame"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -225,7 +218,7 @@ export default async function ApieKkpdaPage() {
                     >
                       <div className="flex flex-col items-center text-center">
                         <div className="w-full h-32 bg-white rounded-lg flex items-center justify-center mb-6">
-                          {org.logoUrl ? (
+                          {org.logoUrl && (
                             <Image
                               src={org.logoUrl}
                               alt={org.pavadinimas || "Logo"}
@@ -233,8 +226,6 @@ export default async function ApieKkpdaPage() {
                               height={100}
                               className="object-contain max-h-24"
                             />
-                          ) : (
-                            <Building2 className="size-12 text-gray-400" />
                           )}
                         </div>
                         <div className="w-12 h-1 bg-gray-800 rounded-full mb-6" />
