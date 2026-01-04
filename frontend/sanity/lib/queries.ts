@@ -1,5 +1,22 @@
 import { defineQuery } from "next-sanity";
 
+export const apieKkpdaQuery = defineQuery(`
+  *[_id == "apieKkpda"][0] {
+    kasEsame,
+    kaAtstovaujame,
+    musuMisija,
+    musuVizija,
+    partneryste,
+    darboVietos,
+    apyvarta,
+    organizacijos[] {
+      pavadinimas,
+      aprasymas,
+      "logoUrl": logo.asset->url
+    }
+  }
+`);
+
 export const leadershipQuery = defineQuery(`
   *[_type == "leadership"] | order(role asc, name asc) {
     _id,

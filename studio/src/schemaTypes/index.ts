@@ -13,12 +13,14 @@ import { istorija } from './singletons/istorija'
 import { partneriai } from './singletons/partneriai'
 import { veikla } from './singletons/veikla'
 import { valdymas } from './singletons/valdymas'
+import apieKkpda from './singletons/apieKkpda'
 // Removed contactsSettings singleton, pastPresident document, partner document (replaced by partneriai singleton), activityReport document (replaced by veikla singleton), and strategicDirection document (replaced by veikla singleton)
 
 // Export an array of all the schema types.  This is used in the Sanity Studio configuration. https://www.sanity.io/docs/schema-types
 
 export const schemaTypes = [
   // Singletons
+  apieKkpda,
   contactInfo,
   legalDocuments,
   membershipInfo,

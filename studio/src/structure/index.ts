@@ -13,6 +13,10 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
     .title('Website Content')
     .items([
+      // Apie KKPDA singleton
+      S.listItem()
+        .title('Apie KKPDA')
+        .child(S.document().schemaType('apieKkpda').documentId('apieKkpda')),
       // Contacts singleton
       S.listItem()
         .title('Kontaktai')
@@ -72,7 +76,7 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       ...S.documentTypeListItems()
         .filter((listItem: any) => {
           const id = listItem.getId();
-          const manuallyAdded = ['contactInfo', 'istatai', 'membershipInfo', 'narystesNaudos', 'member', 'istorija', 'valdymasSettings', 'leadership', 'partneriai', 'veikla'];
+          const manuallyAdded = ['apieKkpda', 'contactInfo', 'istatai', 'membershipInfo', 'narystesNaudos', 'member', 'istorija', 'valdymasSettings', 'leadership', 'partneriai', 'veikla'];
           return !DISABLED_TYPES.includes(id) && !manuallyAdded.includes(id);
         }),
     ])

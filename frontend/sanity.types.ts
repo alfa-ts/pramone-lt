@@ -595,6 +595,18 @@ export type Geopoint = {
 export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | Leadership | SanityImageCrop | SanityImageHotspot | Member | ValdymasSettings | Veikla | Partneriai | Istorija | MembershipInfo | News | Slug | Istatai | ContactInfo | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
+// Variable: apieKkpdaQuery
+// Query: *[_id == "apieKkpda"][0] {    kasEsame,    kaAtstovaujame,    musuMisija,    musuVizija,    partneryste,    darboVietos,    apyvarta,    organizacijos[] {      pavadinimas,      aprasymas,      "logoUrl": logo.asset->url    }  }
+export type ApieKkpdaQueryResult = {
+  kasEsame: null;
+  kaAtstovaujame: null;
+  musuMisija: null;
+  musuVizija: null;
+  partneryste: null;
+  darboVietos: null;
+  apyvarta: null;
+  organizacijos: null;
+} | null;
 // Variable: leadershipQuery
 // Query: *[_type == "leadership"] | order(role asc, name asc) {    _id,    name,    position,    role,    "photo": photo{      asset->{        _id,        url      }    },    phone,    email  }
 export type LeadershipQueryResult = Array<{
@@ -844,6 +856,7 @@ export type NarystesNaudosQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n  *[_id == \"apieKkpda\"][0] {\n    kasEsame,\n    kaAtstovaujame,\n    musuMisija,\n    musuVizija,\n    partneryste,\n    darboVietos,\n    apyvarta,\n    organizacijos[] {\n      pavadinimas,\n      aprasymas,\n      \"logoUrl\": logo.asset->url\n    }\n  }\n": ApieKkpdaQueryResult;
     "\n  *[_type == \"leadership\"] | order(role asc, name asc) {\n    _id,\n    name,\n    position,\n    role,\n    \"photo\": photo{\n      asset->{\n        _id,\n        url\n      }\n    },\n    phone,\n    email\n  }\n": LeadershipQueryResult;
     "\n  *[_type == \"news\"] | order(publishedAt desc) [0...5] {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt\n  }\n": NewsQueryResult;
     "\n  *[_type == \"news\"] | order(isFeatured desc, publishedAt desc) {\n    _id,\n    title,\n    slug,\n    type,\n    isFeatured,\n    content,\n    \"coverImage\": coverImage{\n      asset->{\n        _id,\n        url\n      }\n    },\n    publishedAt,\n    eventStartDate,\n    eventEndDate,\n    organizers,\n    location,\n    googleMapsLocation\n  }\n": AllNewsQueryResult;
