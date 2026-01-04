@@ -11,7 +11,7 @@ import { membershipInfo } from './singletons/membershipInfo'
 import { narystesNaudos } from './singletons/narystesNaudos'
 import { istorija } from './singletons/istorija'
 import { partneriai } from './singletons/partneriai'
-import { veikla } from './singletons/veikla'
+import { veiklosAtaskaitos } from './singletons/veiklosAtaskaitos'
 import { valdymas } from './singletons/valdymas'
 import { atstovavimas } from './singletons/atstovavimas'
 import apieKkpda from './singletons/apieKkpda'
@@ -29,7 +29,7 @@ export const schemaTypes = [
   narystesNaudos,
   istorija,
   partneriai,
-  veikla,
+  veiklosAtaskaitos,
   valdymas,
   // Documents
   member,

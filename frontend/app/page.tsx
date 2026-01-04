@@ -2,7 +2,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import {
   newsQuery,
   membersCountQuery,
-  strategicDirectionsQuery,
+  apieKkpdaQuery,
   partnersQuery,
   membershipInfoQuery,
   contactInfoQuery,
@@ -48,21 +48,21 @@ export default async function Page() {
   const [
     { data: newsData },
     { data: membersCount },
-    { data: veiklaData },
+    { data: apieKkpdaData },
     { data: partners },
     { data: membership },
     { data: contactInfo },
   ] = await Promise.all([
     sanityFetch({ query: newsQuery }),
     sanityFetch({ query: membersCountQuery }),
-    sanityFetch({ query: strategicDirectionsQuery }),
+    sanityFetch({ query: apieKkpdaQuery }),
     sanityFetch({ query: partnersQuery }),
     sanityFetch({ query: membershipInfoQuery }),
     sanityFetch({ query: contactInfoQuery }),
   ]);
 
-  const misija = veiklaData?.misija;
-  const vizija = veiklaData?.vizija;
+  const misija = apieKkpdaData?.misija;
+  const vizija = apieKkpdaData?.vizija;
 
   // Calculate full years of activity since 1989-12-22
   const now = new Date();

@@ -36,6 +36,46 @@ export default defineType({
       description: "Asociacijos vizija",
     },
     {
+      name: "misija",
+      title: "Misija (trumpa)",
+      type: "text",
+      rows: 3,
+      description: "Trumpas misijos aprašymas (naudojama pagrindiniame puslapyje)",
+    },
+    {
+      name: "vizija",
+      title: "Vizija (trumpa)",
+      type: "text",
+      rows: 3,
+      description: "Trumpas vizijos aprašymas (naudojama pagrindiniame puslapyje)",
+    },
+    {
+      name: "strateginesVeiklosKryptys",
+      title: "Strateginės veiklos kryptys",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          name: "kryptis",
+          title: "Kryptis",
+          fields: [
+            {
+              name: "title",
+              title: "Pavadinimas",
+              type: "string",
+              validation: (Rule: any) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: "title",
+            },
+          },
+        },
+      ],
+      description: "Strateginės veiklos kryptys (pvz. 'Pramonės transformacija ir konkurencinių pranašumų sukūrimas')",
+    },
+    {
       name: "kurEiname",
       title: "Kur einame",
       type: "array",

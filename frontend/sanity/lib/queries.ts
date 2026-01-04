@@ -6,6 +6,12 @@ export const apieKkpdaQuery = defineQuery(`
     kaAtstovaujame,
     musuMisija,
     musuVizija,
+    misija,
+    vizija,
+    strateginesVeiklosKryptys[] {
+      _key,
+      title
+    },
     kurEiname,
     "kurEinamePaveikslasUrl": kurEinamePaveikslas.asset->url,
     darboVietos,
@@ -160,16 +166,6 @@ export const membersQuery = defineQuery(`
   }
 `);
 
-export const strategicDirectionsQuery = defineQuery(`
-  *[_id == "veikla"][0] {
-    misija,
-    vizija,
-    "strategicDirections": strategicDirections[] {
-      _key,
-      title
-    }
-  }
-`);
 
 export const partnersQuery = defineQuery(`
   *[_id == "partneriai"][0] {
@@ -205,16 +201,6 @@ export const legalDocumentsQuery = defineQuery(`
   }
 `);
 
-export const activityReportsQuery = defineQuery(`
-  *[_id == "veikla"][0] {
-    "reports": ataskaitos[] {
-      _key,
-      period,
-      "fileUrl": file.asset->url,
-      "fileName": file.asset->originalFilename
-    }
-  }
-`);
 
 export const eventsListQuery = defineQuery(`
   *[_type == "event" &&
@@ -293,6 +279,17 @@ export const atstovavimasQuery = defineQuery(`
       _key,
       title,
       description
+    }
+  }
+`);
+
+export const veiklosAtaskaitosQuery = defineQuery(`
+  *[_id == "veiklosAtaskaitos"][0] {
+    "ataskaitos": ataskaitos[] {
+      _key,
+      period,
+      "fileUrl": file.asset->url,
+      "fileName": file.asset->originalFilename
     }
   }
 `);

@@ -72,15 +72,15 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
       S.listItem()
         .title('Partneriai')
         .child(S.document().schemaType('partneriai').documentId('partneriai')),
-      // Veikla singleton
+      // Veiklos ataskaitos singleton
       S.listItem()
-        .title('Veikla')
-        .child(S.document().schemaType('veikla').documentId('veikla')),
+        .title('Veiklos ataskaitos')
+        .child(S.document().schemaType('veiklosAtaskaitos').documentId('veiklosAtaskaitos')),
       // Rest of schema types
       ...S.documentTypeListItems()
         .filter((listItem: any) => {
           const id = listItem.getId();
-          const manuallyAdded = ['apieKkpda', 'atstovavimas', 'contactInfo', 'istatai', 'membershipInfo', 'narystesNaudos', 'member', 'istorija', 'valdymasSettings', 'leadership', 'partneriai', 'veikla'];
+          const manuallyAdded = ['apieKkpda', 'atstovavimas', 'contactInfo', 'istatai', 'membershipInfo', 'narystesNaudos', 'member', 'istorija', 'valdymasSettings', 'leadership', 'partneriai', 'veiklosAtaskaitos'];
           return !DISABLED_TYPES.includes(id) && !manuallyAdded.includes(id);
         }),
     ])

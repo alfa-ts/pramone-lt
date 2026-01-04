@@ -132,6 +132,38 @@ export default async function ApieKkpdaPage() {
             </div>
           </div>
 
+          {/* Strategic Directions */}
+          {data?.strateginesVeiklosKryptys &&
+            data.strateginesVeiklosKryptys.length > 0 && (
+              <div className="mb-24">
+                <h2 className="text-3xl text-center mb-12">
+                  Strateginės veiklos kryptys
+                </h2>
+                <div className="space-y-4">
+                  {data.strateginesVeiklosKryptys.map(
+                    (
+                      kryptis: { _key?: string; title?: string },
+                      index: number
+                    ) => (
+                      <div
+                        key={kryptis._key || index}
+                        className="bg-white rounded-xl border border-gray-100 p-6 hover:shadow-md transition-shadow"
+                      >
+                        <div className="border-l-2 border-gray-700 pl-6 flex items-center gap-6">
+                          <span className="text-4xl text-gray-700 font-light min-w-[3rem]">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <h3 className="text-lg text-gray-700">
+                            {kryptis.title}
+                          </h3>
+                        </div>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
+
           {/* Statistics */}
           <div className="bg-white rounded-2xl border border-gray-100 p-16 mb-28">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-20">

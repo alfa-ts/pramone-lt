@@ -10,21 +10,29 @@ export default function Header() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutUsDropdownOpen, setIsAboutUsDropdownOpen] = useState(false);
+  const [isVeiklaDropdownOpen, setIsVeiklaDropdownOpen] = useState(false);
   const [isMembersDropdownOpen, setIsMembersDropdownOpen] = useState(false);
   const [isMobileAboutUsOpen, setIsMobileAboutUsOpen] = useState(false);
+  const [isMobileVeiklaOpen, setIsMobileVeiklaOpen] = useState(false);
   const [isMobileMembersOpen, setIsMobileMembersOpen] = useState(false);
 
   const aboutUsMenuItems = [
     { href: "/apie/apie-kkpda", label: "Apie KKPDA" },
     { href: "/apie/valdymas", label: "Valdymas" },
     { href: "/apie/istorija", label: "Istorija" },
-    { href: "/apie/atstovavimas", label: "Atstovavimas" },
     { href: "/apie/istatai", label: "Įstatai" },
-    { href: "/apie/veikla", label: "Veikla" },
     { href: "/apie/partneriai", label: "Partneriai" },
   ];
 
-  const isAboutUsActive = pathname.startsWith("/apie");
+  const veiklaMenuItems = [
+    { href: "/apie/atstovavimas", label: "Atstovavimas" },
+    { href: "/apie/veiklos-ataskaitos", label: "Veiklos ataskaitos" },
+  ];
+
+  const isAboutUsActive =
+    pathname.startsWith("/apie") &&
+    !veiklaMenuItems.some((item) => pathname === item.href);
+  const isVeiklaActive = veiklaMenuItems.some((item) => pathname === item.href);
   const isNewsActive =
     pathname.startsWith("/naujienos-ir-renginiai") ||
     pathname.startsWith("/naujienos/") ||
@@ -33,22 +41,29 @@ export default function Header() {
   const isContactsActive = pathname.startsWith("/kontaktai");
   const isHomeActive = pathname === "/";
 
+  const closeAllMobileDropdowns = () => {
+    setIsMobileAboutUsOpen(false);
+    setIsMobileVeiklaOpen(false);
+    setIsMobileMembersOpen(false);
+  };
+
   // Reset and auto-open mobile dropdowns when menu opens
   useEffect(() => {
     if (isMenuOpen) {
-      setIsMobileAboutUsOpen(false);
-      setIsMobileMembersOpen(false);
+      closeAllMobileDropdowns();
 
       if (isAboutUsActive) {
         setIsMobileAboutUsOpen(true);
+      } else if (isVeiklaActive) {
+        setIsMobileVeiklaOpen(true);
       } else if (isMembersActive) {
         setIsMobileMembersOpen(true);
       }
     }
-  }, [isMenuOpen, isAboutUsActive, isMembersActive]);
+  }, [isMenuOpen, isAboutUsActive, isVeiklaActive, isMembersActive]);
 
   return (
-    <header 
+    <header
       className="bg-white border-b border-gray-100 sticky top-0 z-50"
       style={{ "--header-height": "84px" } as React.CSSProperties}
     >
@@ -72,6 +87,7 @@ export default function Header() {
               Pradžia
             </Link>
 
+            {/* Apie mus dropdown */}
             <div
               className="relative"
               onMouseEnter={() => setIsAboutUsDropdownOpen(true)}
@@ -111,6 +127,46 @@ export default function Header() {
               )}
             </div>
 
+            {/* Veikla dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsVeiklaDropdownOpen(true)}
+              onMouseLeave={() => setIsVeiklaDropdownOpen(false)}
+            >
+              <button
+                className={`flex items-center gap-1 transition-colors ${
+                  isVeiklaActive
+                    ? "text-gray-900 font-medium"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                <span>Veikla</span>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${isVeiklaDropdownOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {isVeiklaDropdownOpen && (
+                <div className="absolute top-full left-0 pt-2 z-50">
+                  <div className="w-64 bg-white rounded-lg shadow-xl border border-gray-100 py-2">
+                    {veiklaMenuItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`block px-4 py-2.5 text-sm transition-colors ${
+                          pathname === item.href
+                            ? "text-gray-900 font-medium bg-gray-50"
+                            : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <Link
               href="/naujienos-ir-renginiai"
               className={`transition-colors ${
@@ -122,6 +178,7 @@ export default function Header() {
               Naujienos
             </Link>
 
+            {/* Nariai dropdown */}
             <div
               className="relative"
               onMouseEnter={() => setIsMembersDropdownOpen(true)}
@@ -204,7 +261,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile Menu - outside inner container for proper positioning */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
         <>
           {/* Overlay */}
@@ -212,8 +269,7 @@ export default function Header() {
             className="fixed inset-0 top-full bg-black/20 z-40 lg:hidden"
             onClick={() => {
               setIsMenuOpen(false);
-              setIsMobileAboutUsOpen(false);
-              setIsMobileMembersOpen(false);
+              closeAllMobileDropdowns();
             }}
           />
 
@@ -229,8 +285,7 @@ export default function Header() {
                 }`}
                 onClick={() => {
                   setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
+                  closeAllMobileDropdowns();
                 }}
               >
                 Pradžia
@@ -264,8 +319,45 @@ export default function Header() {
                         }`}
                         onClick={() => {
                           setIsMenuOpen(false);
-                          setIsMobileAboutUsOpen(false);
-                          setIsMobileMembersOpen(false);
+                          closeAllMobileDropdowns();
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Veikla dropdown */}
+              <div>
+                <button
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+                    isVeiklaActive
+                      ? "bg-gray-50 text-gray-900 font-medium"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  }`}
+                  onClick={() => setIsMobileVeiklaOpen(!isMobileVeiklaOpen)}
+                >
+                  <span>Veikla</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${isMobileVeiklaOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isMobileVeiklaOpen && (
+                  <div className="ml-4 mt-1 space-y-1">
+                    {veiklaMenuItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`block px-4 py-2 rounded-lg text-sm transition-colors ${
+                          pathname === item.href
+                            ? "bg-gray-50 text-gray-900 font-medium"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                        }`}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          closeAllMobileDropdowns();
                         }}
                       >
                         {item.label}
@@ -284,8 +376,7 @@ export default function Header() {
                 }`}
                 onClick={() => {
                   setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
+                  closeAllMobileDropdowns();
                 }}
               >
                 Naujienos
@@ -317,8 +408,7 @@ export default function Header() {
                       }`}
                       onClick={() => {
                         setIsMenuOpen(false);
-                        setIsMobileAboutUsOpen(false);
-                        setIsMobileMembersOpen(false);
+                        closeAllMobileDropdowns();
                       }}
                     >
                       Narystės naudos
@@ -332,8 +422,7 @@ export default function Header() {
                       }`}
                       onClick={() => {
                         setIsMenuOpen(false);
-                        setIsMobileAboutUsOpen(false);
-                        setIsMobileMembersOpen(false);
+                        closeAllMobileDropdowns();
                       }}
                     >
                       Nariai
@@ -347,8 +436,7 @@ export default function Header() {
                       }`}
                       onClick={() => {
                         setIsMenuOpen(false);
-                        setIsMobileAboutUsOpen(false);
-                        setIsMobileMembersOpen(false);
+                        closeAllMobileDropdowns();
                       }}
                     >
                       Kaip tapti nariu?
@@ -366,8 +454,7 @@ export default function Header() {
                 }`}
                 onClick={() => {
                   setIsMenuOpen(false);
-                  setIsMobileAboutUsOpen(false);
-                  setIsMobileMembersOpen(false);
+                  closeAllMobileDropdowns();
                 }}
               >
                 Kontaktai
