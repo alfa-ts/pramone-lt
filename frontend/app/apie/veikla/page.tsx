@@ -10,15 +10,7 @@ import {
   GraduationCap,
   Handshake,
   Shield,
-  Target,
-  Briefcase,
-  Users,
-  Building2,
-  MapPin,
-  TrendingUp,
   FileText,
-  Globe,
-  MapPinned,
   ExternalLink,
 } from "lucide-react";
 
@@ -38,101 +30,6 @@ export default async function VeiklaPage() {
     veiklaData?.vizija ||
     "Vedanti ir atvira verslo organizacija, kurioje narystė yra vertinga ir garbinga.";
   const strategicDirections = veiklaData?.strategicDirections || [];
-
-  const nationalActivities = [
-    {
-      icon: <Target className="size-8 text-[#fe9a00]" />,
-      title: "LR Trišalėje taryboje",
-      description:
-        "Dalyvavimas nacionalinėje trišalėje taryboje, kurioje sprendžiami darbo rinkos ir socialinės politikos klausimai",
-      gradient: "from-orange-50 to-white",
-      hoverGradient: "group-hover:from-orange-100",
-    },
-    {
-      icon: <Briefcase className="size-8 text-[#fe9a00]" />,
-      title: "LR Darbuotojų saugos ir sveikatos komisijoje",
-      description:
-        "Aktyvus dalyvavimas formuojant darbuotojų saugos ir sveikatos politiką nacionaliniu lygmeniu",
-      gradient: "from-blue-50 to-white",
-      hoverGradient: "group-hover:from-blue-100",
-    },
-    {
-      icon: <Users className="size-8 text-[#fe9a00]" />,
-      title: "LR darbo ginčų komisijose",
-      description:
-        "Atstovauja darbdavių interesus darbo ginčų komisijose, padedant spręsti darbo santykių klausimus",
-      gradient: "from-green-50 to-white",
-      hoverGradient: "group-hover:from-green-100",
-    },
-    {
-      icon: <Building2 className="size-8 text-[#fe9a00]" />,
-      title: "LPK Prezidiume",
-      description:
-        "Narystė Lietuvos pramonininkų konfederacijos prezidiume, prisidedant prie verslo aplinkos gerinimo",
-      gradient: "from-purple-50 to-white",
-      hoverGradient: "group-hover:from-purple-100",
-    },
-    {
-      icon: <FileText className="size-8 text-[#fe9a00]" />,
-      title: "LPK komitetuose",
-      description:
-        "Aktyvus dalyvavimas LPK komitetų veikloje, prisidedant prie pramonės sektoriaus plėtros",
-      gradient: "from-red-50 to-white",
-      hoverGradient: "group-hover:from-red-100",
-    },
-  ];
-
-  const regionalActivities = [
-    {
-      icon: <Briefcase className="size-6 text-white" />,
-      title: "Darbo ginčių komisijos prie Kauno darbo inspekcijos",
-      description:
-        "Dalyvavimas darbo ginčių komisijoje, padedant spręsti darbo santykių klausimus Kauno regione",
-    },
-    {
-      icon: <Users className="size-6 text-white" />,
-      title: "Kauno regiono plėtros tarybos kolegijų partnerių grupėje",
-      description:
-        "Aktyvus dalyvavimas Kauno regiono plėtros tarybos veikloje, prisidedant prie strateginių sprendimų",
-    },
-    {
-      icon: <Building2 className="size-6 text-white" />,
-      title: "Kauno miesto savivaldybės Verslo taryboje",
-      description:
-        "Bendradarbiavimas su Kauno miesto savivaldybe, atstovaujant verslo interesus",
-    },
-    {
-      icon: <MapPin className="size-6 text-white" />,
-      title: "Kauno miesto savivaldybės Trišalėje taryboje",
-      description:
-        "Dalyvavimas trišalėje taryboje, svarstant darbo rinkos klausimus regiono lygmeniu",
-    },
-    {
-      icon: <Target className="size-6 text-white" />,
-      title: "Kauno rajono savivaldybės Trišalėje taryboje",
-      description:
-        "Atstovauja verslo interesus Kauno rajono savivaldybės trišalėje taryboje",
-    },
-    {
-      icon: <TrendingUp className="size-6 text-white" />,
-      title:
-        "Kauno rajono savivaldybės smulkaus ir vidutinio verslo skatinimo fondo valdyboje",
-      description:
-        "Dalyvavimas fondo valdybos veikloje, skatinant verslo plėtrą regione",
-    },
-    {
-      icon: <GraduationCap className="size-6 text-white" />,
-      title: "Kauno technologijų mokymo centro taryboje",
-      description:
-        "Bendradarbiavimas su mokymo centru, prisidedant prie profesinio mokymo kokybės gerinimo",
-    },
-    {
-      icon: <GraduationCap className="size-6 text-white" />,
-      title: "Lietuvos sveikatos mokslų universiteto savivaldos grupėje",
-      description:
-        "Aktyvus bendradarbiavimas su universitetu, stiprinant mokslo ir verslo ryšius",
-    },
-  ];
 
   // Map strategic directions with icons
   const strategicIcons = [Sparkles, GraduationCap, Handshake, Shield];
@@ -263,82 +160,6 @@ export default async function VeiklaPage() {
               </div>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* National Activities Section */}
-      <section className="max-w-7xl mx-auto px-8 py-20">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#fe9a00] to-[#e17100] rounded-full px-4 py-2 mb-4">
-            <Globe className="size-5 text-white" />
-            <span className="text-white font-medium">
-              Nacionalinės atstovavimo sritys
-            </span>
-          </div>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Asociacija aktyviai dalyvauja nacionalinėse institucijose ir
-            organizacijose, atstovaujama regiono verslo interesams
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {nationalActivities.map((activity, index) => (
-            <div
-              key={index}
-              className="bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-lg transition-shadow group"
-            >
-              <div
-                className={`bg-gradient-to-br ${activity.gradient} rounded-xl p-4 mb-4 ${activity.hoverGradient} transition-colors`}
-              >
-                {activity.icon}
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                {activity.title}
-              </h3>
-              <p className="text-gray-600 text-sm">{activity.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Regional Activities Section */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 rounded-full px-4 py-2 mb-4">
-              <MapPinned className="size-5 text-white" />
-              <span className="text-white font-medium">
-                Regioninės atstovavimo sritys
-              </span>
-            </div>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Aktyviai prisidedame prie Kauno regiono ekonominio ir socialinio
-              vystymosi
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {regionalActivities.map((activity, index) => (
-              <div
-                key={index}
-                className="bg-white border border-gray-100 rounded-2xl p-8 hover:shadow-lg transition-shadow"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="bg-gradient-to-b from-[#fe9a00] to-[#e17100] rounded-xl p-3 shrink-0">
-                    {activity.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-base font-medium text-gray-900 mb-3">
-                      {activity.title}
-                    </h3>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {activity.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

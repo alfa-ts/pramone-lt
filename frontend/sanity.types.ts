@@ -850,6 +850,12 @@ export type NarystesNaudosQueryResult = {
     description4: string | null;
   }> | null;
 } | null;
+// Variable: atstovavimasQuery
+// Query: *[_id == "atstovavimas"][0] {    nationalActivities[] {      _key,      title,      description    },    regionalActivities[] {      _key,      title,      description    }  }
+export type AtstovavimasQueryResult = {
+  nationalActivities: null;
+  regionalActivities: null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -874,5 +880,6 @@ declare module "@sanity/client" {
     "\n  *[_type == \"event\" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    startAt,\n    endAt,\n    time,\n    location,\n    locationLat,\n    locationLng,\n    organizers,\n    excerpt,\n    content,\n    images[]{ asset->{ _id, url } }\n  }\n": SingleEventQueryResult;
     "\n  *[_id == \"membershipInfo\"][0] {\n    whyJoinText,\n    requiredDocuments[] {\n      _key,\n      title,\n      description,\n      \"fileUrl\": file.asset->url,\n      \"fileName\": file.asset->originalFilename,\n      buttonText\n    }\n  }\n": MembershipInfoQueryResult;
     "\n  *[_id == \"narystesNaudos\"][0] {\n    benefitsText[] {\n      _key,\n      title,\n      description1,\n      description2,\n      description3,\n      description4\n    }\n  }\n": NarystesNaudosQueryResult;
+    "\n  *[_id == \"atstovavimas\"][0] {\n    nationalActivities[] {\n      _key,\n      title,\n      description\n    },\n    regionalActivities[] {\n      _key,\n      title,\n      description\n    }\n  }\n": AtstovavimasQueryResult;
   }
 }

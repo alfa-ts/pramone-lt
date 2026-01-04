@@ -282,4 +282,19 @@ export const narystesNaudosQuery = defineQuery(`
   }
 `);
 
+export const atstovavimasQuery = defineQuery(`
+  *[_id == "atstovavimas"][0] {
+    nationalActivities[] {
+      _key,
+      title,
+      description
+    },
+    regionalActivities[] {
+      _key,
+      title,
+      description
+    }
+  }
+`);
+
 // Removed unused queries for pages, posts, and people since those document types are no longer needed

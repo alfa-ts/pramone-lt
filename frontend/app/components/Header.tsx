@@ -18,6 +18,7 @@ export default function Header() {
     { href: "/apie/apie-kkpda", label: "Apie KKPDA" },
     { href: "/apie/valdymas", label: "Valdymas" },
     { href: "/apie/istorija", label: "Istorija" },
+    { href: "/apie/atstovavimas", label: "Atstovavimas" },
     { href: "/apie/istatai", label: "Įstatai" },
     { href: "/apie/veikla", label: "Veikla" },
     { href: "/apie/partneriai", label: "Partneriai" },

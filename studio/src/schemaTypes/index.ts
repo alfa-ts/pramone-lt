@@ -13,6 +13,7 @@ import { istorija } from './singletons/istorija'
 import { partneriai } from './singletons/partneriai'
 import { veikla } from './singletons/veikla'
 import { valdymas } from './singletons/valdymas'
+import { atstovavimas } from './singletons/atstovavimas'
 import apieKkpda from './singletons/apieKkpda'
 // Removed contactsSettings singleton, pastPresident document, partner document (replaced by partneriai singleton), activityReport document (replaced by veikla singleton), and strategicDirection document (replaced by veikla singleton)
 
@@ -21,6 +22,7 @@ import apieKkpda from './singletons/apieKkpda'
 export const schemaTypes = [
   // Singletons
   apieKkpda,
+  atstovavimas,
   contactInfo,
   legalDocuments,
   membershipInfo,
