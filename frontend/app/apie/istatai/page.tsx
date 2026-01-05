@@ -3,34 +3,12 @@ import Link from "next/link";
 import { sanityFetch } from "@/sanity/lib/live";
 import { legalDocumentsQuery } from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
-import {
-  Scale,
-  CheckCircle,
-  ExternalLink,
-  Eye,
-  Heart,
-  Handshake,
-  Leaf,
-  ShieldX,
-  Lock,
-  Shield,
-  type LucideIcon,
-} from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
-// Icon mapping for dynamic icons
-const iconMap: Record<string, LucideIcon> = {
-  eye: Eye,
-  heart: Heart,
-  handshake: Handshake,
-  leaf: Leaf,
-  shieldX: ShieldX,
-  lock: Lock,
-  shield: Shield,
-  check: CheckCircle,
-};
-
-// Note icons cycle
-const noteIcons = [CheckCircle, Scale, Shield];
+// Get first letter from title for dynamic badge
+function getInitial(title: string): string {
+  return title.charAt(0).toUpperCase();
+}
 
 export default async function IstataiPage() {
   const { data } = await sanityFetch({ query: legalDocumentsQuery });
@@ -148,7 +126,11 @@ export default async function IstataiPage() {
       )}
 
       {/* Ethics Code Detailed Section */}
-      {(ethicsTitle || ethicsDescription || ethicsValues?.length || ethicsNotes?.length || ethicsUrl) && (
+      {(ethicsTitle ||
+        ethicsDescription ||
+        ethicsValues?.length ||
+        ethicsNotes?.length ||
+        ethicsUrl) && (
         <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50/20">
           <div className="max-w-6xl mx-auto px-8 lg:px-12">
             {/* Header */}
@@ -166,34 +148,40 @@ export default async function IstataiPage() {
             )}
 
             {/* Core Values - Highlighted Section */}
-            {(ethicsValuesIntro || (ethicsValues && ethicsValues.length > 0)) && (
+            {(ethicsValuesIntro ||
+              (ethicsValues && ethicsValues.length > 0)) && (
               <div className="bg-white border border-gray-200 rounded-3xl p-8 sm:p-10 lg:p-12 shadow-lg mb-16">
                 {ethicsValuesIntro && (
-                  <p className="text-gray-800 text-xl sm:text-2xl leading-relaxed mb-8 text-center">
+                  <p className="text-gray-800 text-xl sm:text-2xl leading-relaxed mb-10 text-center">
                     {ethicsValuesIntro}
                   </p>
                 )}
 
                 {ethicsValues && ethicsValues.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {ethicsValues.map(
-                      (
-                        value: { title: string; icon?: string },
-                        index: number
-                      ) => {
-                        const IconComponent =
-                          iconMap[value.icon || "shield"] || Shield;
+                      (value: { title: string }, index: number) => {
+                        const number = String(index + 1).padStart(2, "0");
+                        const initial = getInitial(value.title);
+
                         return (
-                          <div
-                            key={index}
-                            className="flex items-center gap-4 bg-gray-50 border border-gray-200 rounded-xl p-5 hover:border-slate-400 hover:shadow-lg hover:-translate-y-0.5 transition-all"
-                          >
-                            <div className="size-12 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center shrink-0">
-                              <IconComponent className="size-7 text-slate-700" />
+                          <div key={index} className="group relative">
+                            {/* Large decorative number */}
+                            <div className="absolute -top-5 -left-3 text-[100px] font-bold text-slate-100 select-none pointer-events-none transition-colors duration-300 group-hover:text-slate-200 leading-none">
+                              {number}
                             </div>
-                            <span className="text-gray-900 font-medium leading-tight">
-                              {value.title}
-                            </span>
+
+                            {/* Card content */}
+                            <div className="relative p-6 rounded-2xl bg-white border border-gray-200 hover:border-slate-300 hover:shadow-xl transition-all duration-300 h-full">
+                              {/* Accent bar */}
+                              <div className="w-12 h-1 bg-gradient-to-r from-slate-700 to-slate-500 rounded-full mb-5"></div>
+
+                              {/* Letter badge */}
+
+                              <span className="text-gray-900 font-semibold leading-snug block">
+                                {value.title}
+                              </span>
+                            </div>
                           </div>
                         );
                       }
@@ -207,16 +195,21 @@ export default async function IstataiPage() {
             {((ethicsNotes && ethicsNotes.length > 0) || ethicsUrl) && (
               <div className="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-sm">
                 {ethicsNotes && ethicsNotes.length > 0 && (
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-10 mb-8 lg:mb-10">
+                  <div
+                    className={`grid grid-cols-1 ${ethicsNotes.length >= 3 ? "lg:grid-cols-3" : ethicsNotes.length === 2 ? "lg:grid-cols-2" : ""} gap-6 lg:gap-8 mb-8 lg:mb-10`}
+                  >
                     {ethicsNotes.map(
                       (
                         note: { text: string; isItalic?: boolean },
                         index: number
                       ) => {
-                        const NoteIcon = noteIcons[index % noteIcons.length];
+                        const number = String(index + 1).padStart(2, "0");
+
                         return (
-                          <div key={index} className="flex gap-3">
-                            <NoteIcon className="size-5 text-slate-600 shrink-0 mt-0.5" />
+                          <div
+                            key={index}
+                            className="group relative pl-5 border-l-2 border-slate-200 hover:border-slate-500 transition-colors"
+                          >
                             <p
                               className={`text-gray-700 leading-relaxed text-sm ${
                                 note.isItalic ? "italic" : ""
