@@ -194,8 +194,21 @@ export const contactInfoQuery = defineQuery(`
 
 export const legalDocumentsQuery = defineQuery(`
   *[_type == "istatai"][0] {
+    introTitle,
+    introText,
+    "introImageUrl": introImage.asset->url,
     "statutesUrl": statutesFile.asset->url,
     "statutesName": statutesFile.asset->originalFilename,
+    ethicsTitle,
+    ethicsDescription,
+    ethicsValuesIntro,
+    ethicsValues[] {
+      title
+    },
+    ethicsNotes[] {
+      text,
+      isItalic
+    },
     "ethicsUrl": ethicsFile.asset->url,
     "ethicsName": ethicsFile.asset->originalFilename
   }
