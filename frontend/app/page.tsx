@@ -4,7 +4,7 @@ import {
   membersCountQuery,
   apieKkpdaQuery,
   partnersQuery,
-  membershipInfoQuery,
+  narystesNaudosQuery,
   contactInfoQuery,
 } from "@/sanity/lib/queries";
 import { NewsCarousel } from "./components/NewsCarousel";
@@ -50,14 +50,14 @@ export default async function Page() {
     { data: membersCount },
     { data: apieKkpdaData },
     { data: partners },
-    { data: membership },
+    { data: narystesNaudos },
     { data: contactInfo },
   ] = await Promise.all([
     sanityFetch({ query: newsQuery }),
     sanityFetch({ query: membersCountQuery }),
     sanityFetch({ query: apieKkpdaQuery }),
     sanityFetch({ query: partnersQuery }),
-    sanityFetch({ query: membershipInfoQuery }),
+    sanityFetch({ query: narystesNaudosQuery }),
     sanityFetch({ query: contactInfoQuery }),
   ]);
 
@@ -108,12 +108,13 @@ export default async function Page() {
       />
 
       {/* Member Benefits */}
-      <MemberBenefits benefits={membership?.benefitsText ?? undefined} />
+      <MemberBenefits benefits={narystesNaudos?.benefitsText ?? undefined} />
 
       {/* Membership CTA */}
       <MembershipCTA
         membersCount={membersCount || 0}
         yearsOfActivity={yearsOfActivity}
+        apyvarta={apieKkpdaData?.apyvarta ?? undefined}
         contactInfo={contactInfo}
       />
     </div>
