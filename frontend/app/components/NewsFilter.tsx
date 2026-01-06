@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Tag,
   Clock,
-  Building2,
+  Newspaper,
 } from "lucide-react";
 import { AllNewsQueryResult, BlockContent } from "@/sanity.types";
 import { createExcerpt } from "@/lib/portableTextUtils";
@@ -106,11 +106,11 @@ interface NewsFilterProps {
 export function NewsFilter({ newsData }: NewsFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // Get initial values from URL or defaults
   const categoryParam = searchParams.get("kategorija") || "Visos";
   const pageParam = searchParams.get("puslapis");
-  
+
   const [selectedCategory, setSelectedCategory] = useState(categoryParam);
   const [currentPage, setCurrentPage] = useState(
     pageParam ? parseInt(pageParam, 10) : 1
@@ -122,18 +122,20 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
   // Update URL when filters change
   useEffect(() => {
     const params = new URLSearchParams();
-    
+
     if (selectedCategory !== "Visos") {
       params.set("kategorija", selectedCategory);
     }
-    
+
     if (currentPage > 1) {
       params.set("puslapis", currentPage.toString());
     }
-    
+
     const queryString = params.toString();
-    const newUrl = queryString ? `/naujienos-ir-renginiai?${queryString}` : "/naujienos-ir-renginiai";
-    
+    const newUrl = queryString
+      ? `/naujienos-ir-renginiai?${queryString}`
+      : "/naujienos-ir-renginiai";
+
     router.replace(newUrl, { scroll: false });
   }, [selectedCategory, currentPage, router]);
 
@@ -164,11 +166,14 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
     <>
       {/* Featured Article */}
       {featuredArticle && (
-        <section className="py-12 bg-white border-b border-gray-100">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-all duration-500 group">
+        <section className="py-10 bg-white border-b border-gray-100">
+          <div className="max-w-7xl mx-auto px-8 lg:px-12">
+            <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl hover:border-slate-300 transition-all duration-500 group">
+              {/* Decorative corner accent */}
+              <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-bl from-slate-100 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                <div className="relative h-[400px] lg:h-auto overflow-hidden">
+                <div className="relative h-[300px] lg:h-[360px] overflow-hidden">
                   {featuredArticle.coverImage?.asset?.url ? (
                     <Image
                       src={featuredArticle.coverImage.asset.url}
@@ -177,21 +182,25 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300" />
+                    <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300" />
                   )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   <div className="absolute top-4 left-4">
-                    <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                    <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-3.5 py-1.5 rounded-full text-sm font-medium shadow-lg">
                       <Tag className="size-3.5" />
                       {featuredArticle.type === "renginys"
-                        ? "Renginiai"
-                        : "Naujienos"}
+                        ? "Renginys"
+                        : "Naujiena"}
                     </span>
                   </div>
                 </div>
 
-                <div className="p-8 lg:p-12 flex flex-col justify-center">
-                  <div className="inline-flex items-center gap-2 text-sm text-gray-500 mb-4">
-                    <Calendar className="size-4 text-[#fe9a00]" />
+                <div className="p-6 lg:p-10 flex flex-col justify-center relative">
+                  {/* Slate accent bar */}
+                  <div className="w-10 h-1 bg-gradient-to-r from-slate-700 to-slate-500 rounded-full mb-5" />
+
+                  <div className="inline-flex items-center gap-2 text-sm text-gray-500 mb-3">
+                    <Calendar className="size-4 text-slate-600" />
                     {featuredArticle.type === "renginys" &&
                     featuredArticle.eventStartDate
                       ? formatEventTime(
@@ -201,10 +210,10 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                       : formatDate(featuredArticle.publishedAt)}
                   </div>
 
-                  <h2 className="text-2xl text-gray-900 mb-4">
+                  <h2 className="text-2xl lg:text-2xl text-gray-900 mb-3 font-semibold">
                     {featuredArticle.title}
                   </h2>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-gray-600 mb-6 leading-relaxed text-base line-clamp-3">
                     {createExcerpt(featuredArticle.content)}
                   </p>
 
@@ -214,10 +223,10 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                         ? `/renginiai/${featuredArticle.slug.current}`
                         : `/naujienos/${featuredArticle.slug.current}`
                     }
-                    className="inline-flex items-center gap-2 text-[#fe9a00] font-medium hover:gap-3 transition-all group/link"
+                    className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:from-slate-800 hover:to-slate-900 hover:shadow-xl hover:-translate-y-0.5 transition-all w-fit group/link"
                   >
                     Skaityti daugiau
-                    <ArrowRight className="size-5 group-hover/link:translate-x-1 transition-transform" />
+                    <ArrowRight className="size-4 group-hover/link:translate-x-1 transition-transform" />
                   </Link>
                 </div>
               </div>
@@ -228,15 +237,15 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
 
       {/* Category Filter */}
       <section className="py-8 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="flex items-center gap-3 overflow-x-auto pb-2">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => handleCategoryChange(category)}
-                className={`px-5 py-2.5 rounded-full whitespace-nowrap transition-all font-medium text-sm ${
+                className={`px-6 py-2.5 rounded-full whitespace-nowrap transition-all font-medium text-sm ${
                   selectedCategory === category
-                    ? "bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white shadow-lg shadow-orange-200"
+                    ? "bg-gradient-to-r from-slate-700 to-slate-800 text-white shadow-lg"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                 }`}
               >
@@ -248,37 +257,45 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
       </section>
 
       {/* News Grid */}
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-7xl mx-auto px-8">
+      <section className="py-16 bg-gradient-to-b from-white via-gray-50/50 to-gray-50 relative overflow-hidden">
+        {/* Subtle background decorations */}
+        <div className="absolute top-20 left-10 w-64 h-64 bg-slate-100/50 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-48 h-48 bg-blue-50/50 rounded-full blur-2xl" />
+
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
           {regularArticles.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {regularArticles.map((article) => (
                 <article
                   key={article._id}
-                  className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl hover:border-[#fe9a00] transition-all duration-300 group flex flex-col"
+                  className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col"
                 >
+                  {/* Decorative hover accent */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-slate-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10" />
+
                   <div className="relative h-56 overflow-hidden">
                     {article.coverImage?.asset?.url ? (
                       <Image
                         src={article.coverImage.asset.url}
                         alt={`${article.title} nuotrauka`}
                         fill
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300" />
+                      <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300" />
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
                     <div className="absolute top-3 left-3">
-                      <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-sm text-gray-900 px-3 py-1 rounded-full text-xs font-medium">
+                      <span className="inline-flex items-center gap-1.5 bg-white/95 backdrop-blur-sm text-gray-800 px-3 py-1.5 rounded-full text-xs font-medium border border-gray-100">
                         <Tag className="size-3" />
-                        {article.type === "renginys" ? "Renginiai" : "Naujienos"}
+                        {article.type === "renginys" ? "Renginys" : "Naujiena"}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-6 flex flex-col flex-1">
+                  <div className="p-6 flex flex-col flex-1 relative">
                     <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-                      <Clock className="size-3.5 text-[#fe9a00]" />
+                      <Clock className="size-3.5 text-slate-500" />
                       {article.type === "renginys" && article.eventStartDate
                         ? formatEventTime(
                             article.eventStartDate,
@@ -287,11 +304,11 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                         : formatDate(article.publishedAt)}
                     </div>
 
-                    <h3 className="text-lg font-medium text-gray-900 mb-3 group-hover:text-[#fe9a00] transition-colors line-clamp-2">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3 group-hover:text-slate-700 transition-colors line-clamp-2">
                       {article.title}
                     </h3>
 
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1">
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-3 flex-1 leading-relaxed">
                       {createExcerpt(article.content, 200)}
                     </p>
 
@@ -301,9 +318,9 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                           ? `/renginiai/${article.slug.current}`
                           : `/naujienos/${article.slug.current}`
                       }
-                      className="inline-flex items-center gap-2 text-[#fe9a00] font-medium text-sm hover:gap-3 transition-all group/link mt-auto"
+                      className="inline-flex items-center gap-2 text-slate-700 font-medium text-sm hover:text-slate-900 transition-all group/link mt-auto"
                     >
-                      Plačiau
+                      Skaityti daugiau
                       <ArrowRight className="size-4 group-hover/link:translate-x-1 transition-transform" />
                     </Link>
                   </div>
@@ -311,33 +328,37 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
               ))}
             </div>
           ) : (
-            <div className="text-center py-16">
-              <div className="inline-flex items-center justify-center size-20 bg-gray-100 rounded-full mb-4">
-                <Building2 className="size-10 text-gray-400" />
+            <div className="text-center py-20">
+              <div className="inline-flex items-center justify-center size-24 bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl mb-6">
+                <Newspaper className="size-12 text-slate-400" />
               </div>
-              <h3 className="text-gray-900 mb-2 text-xl font-medium">
+              <h3 className="text-gray-900 mb-3 text-2xl font-semibold">
                 {selectedCategory === "Renginiai"
                   ? "Renginių nėra"
-                  : "Naujienų nerasta"}
+                  : selectedCategory === "Naujienos"
+                    ? "Naujienų nerasta"
+                    : "Įrašų nerasta"}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-500 text-lg">
                 {selectedCategory === "Renginiai"
-                  ? "Šioje kategorijoje renginių nėra"
-                  : "Šioje kategorijoje naujienų nėra"}
+                  ? "Šiuo metu renginių nėra"
+                  : selectedCategory === "Naujienos"
+                    ? "Šiuo metu naujienų nėra"
+                    : "Šiuo metu įrašų nėra"}
               </p>
             </div>
           )}
 
           {/* Pagination */}
           {totalPages > 1 && regularArticles.length > 0 && (
-            <div className="flex items-center justify-center gap-2 mt-12">
+            <div className="flex items-center justify-center gap-3 mt-16">
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
                   currentPage === 1
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                    : "bg-white text-gray-700 hover:bg-slate-50 hover:text-slate-800 border border-gray-200 hover:border-slate-300"
                 }`}
               >
                 Ankstesnis
@@ -349,10 +370,10 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`size-10 rounded-lg font-medium transition-all ${
+                      className={`size-11 rounded-xl font-medium transition-all ${
                         currentPage === page
-                          ? "bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white shadow-lg shadow-orange-200"
-                          : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                          ? "bg-gradient-to-r from-slate-700 to-slate-800 text-white shadow-lg"
+                          : "bg-white text-gray-700 hover:bg-slate-50 hover:text-slate-800 border border-gray-200 hover:border-slate-300"
                       }`}
                     >
                       {page}
@@ -366,10 +387,10 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
                 disabled={currentPage === totalPages}
-                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
                   currentPage === totalPages
                     ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                    : "bg-white text-gray-700 hover:bg-slate-50 hover:text-slate-800 border border-gray-200 hover:border-slate-300"
                 }`}
               >
                 Kitas
@@ -381,4 +402,3 @@ export function NewsFilter({ newsData }: NewsFilterProps) {
     </>
   );
 }
-

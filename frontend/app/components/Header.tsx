@@ -175,7 +175,7 @@ export default function Header() {
                   : "text-gray-600 hover:text-gray-900"
               }`}
             >
-              Naujienos
+              Naujienos ir renginiai
             </Link>
 
             {/* Nariai dropdown */}
@@ -379,7 +379,7 @@ export default function Header() {
                   closeAllMobileDropdowns();
                 }}
               >
-                Naujienos
+                Naujienos ir renginiai
               </Link>
 
               {/* Nariai dropdown */}

@@ -1,5 +1,9 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { singleNewsQuery, recentNewsQuery, contactInfoQuery } from "@/sanity/lib/queries";
+import {
+  singleNewsQuery,
+  recentNewsQuery,
+  contactInfoQuery,
+} from "@/sanity/lib/queries";
 import PortableText from "@/app/components/PortableText";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +19,6 @@ import {
   Users,
   Clock,
   Tag,
-  ChevronRight,
   ArrowRight,
   Download,
   FileText,
@@ -108,11 +111,11 @@ export async function generateMetadata({
   const coverImageUrl = event.coverImage?.asset?.url;
 
   const title = event.title || "Renginys";
-  const eventTime = event.eventStartDate 
+  const eventTime = event.eventStartDate
     ? formatEventTime(event.eventStartDate, event.eventEndDate)
     : null;
 
-  const fullDescription = eventTime 
+  const fullDescription = eventTime
     ? `${eventTime}. ${description}`
     : description;
 
@@ -170,33 +173,65 @@ export default async function EventDetailPage({
 
   // Filter recent events to show only events
   const filteredRecentEvents = recentEvents
-    ?.filter((item: RecentNewsQueryResult[number]) => item.type === "renginys" && item._id !== event._id)
+    ?.filter(
+      (item: RecentNewsQueryResult[number]) =>
+        item.type === "renginys" && item._id !== event._id
+    )
     .slice(0, 3);
 
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 py-4">
+      <div className="bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 border-b border-gray-200/50">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 py-4">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">
+            <Link
+              href="/"
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+            >
               Pradžia
             </Link>
-            <ChevronRight className="size-4 text-gray-400" />
+            <svg
+              className="size-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                d="M5.25 10.5L8.75 7L5.25 3.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.16667"
+              />
+            </svg>
             <Link
               href="/naujienos-ir-renginiai?kategorija=Renginiai"
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 transition-colors"
             >
               Renginiai
             </Link>
-            <ChevronRight className="size-4 text-gray-400" />
-            <span className="text-gray-900">{event.title}</span>
+            <svg
+              className="size-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                d="M5.25 10.5L8.75 7L5.25 3.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.16667"
+              />
+            </svg>
+            <span className="text-gray-900 truncate max-w-xs">
+              {event.title}
+            </span>
           </div>
         </div>
       </div>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-b from-gray-900 to-gray-800 text-white overflow-hidden">
+      <section className="relative bg-gradient-to-br from-slate-800 to-slate-900 text-white overflow-hidden">
         {event.coverImage?.asset?.url && (
           <>
             <div className="absolute inset-0 opacity-20">
@@ -207,29 +242,32 @@ export default async function EventDetailPage({
                 className="object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/95 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/95 to-transparent" />
           </>
         )}
 
-        <div className="relative max-w-7xl mx-auto px-8 py-20">
+        {/* Decorative shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-slate-700/20 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-gradient-to-tr from-blue-900/10 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-1/2 right-1/4 w-24 h-24 border border-white/10 rounded-2xl rotate-12" />
+
+        <div className="relative max-w-7xl mx-auto px-8 lg:px-12 py-20">
           <div className="max-w-3xl">
             <div className="mb-6">
-              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-4 py-2 rounded-full text-sm font-medium">
+              <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium border border-white/20">
                 <Calendar className="size-4" />
                 Renginys
               </span>
             </div>
 
-            <h1 className="mb-6 text-5xl lg:text-6xl">{event.title}</h1>
-
-            <p className="text-xl text-gray-300 leading-relaxed mb-8">
-              {createExcerpt(event.content)}
-            </p>
+            <h1 className="mb-6 text-4xl md:text-5xl lg:text-6xl">
+              {event.title}
+            </h1>
 
             <div className="flex flex-wrap items-center gap-6 text-gray-300">
               {event.eventStartDate && (
                 <div className="flex items-center gap-2">
-                  <Calendar className="size-5 text-[#fe9a00]" />
+                  <Calendar className="size-5 text-slate-400" />
                   <span>
                     {formatEventTime(event.eventStartDate, event.eventEndDate)}
                   </span>
@@ -237,13 +275,13 @@ export default async function EventDetailPage({
               )}
               {event.timeSlots && event.timeSlots[0] && (
                 <div className="flex items-center gap-2">
-                  <Clock className="size-5 text-[#fe9a00]" />
+                  <Clock className="size-5 text-slate-400" />
                   <span>{event.timeSlots[0]}</span>
                 </div>
               )}
               {event.location && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="size-5 text-[#fe9a00]" />
+                  <MapPin className="size-5 text-slate-400" />
                   <span>{event.location}</span>
                 </div>
               )}
@@ -255,7 +293,7 @@ export default async function EventDetailPage({
                   href={event.registrationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-8 py-3 rounded-lg font-medium hover:shadow-lg hover:shadow-orange-500/50 transition-all flex items-center gap-2"
+                  className="bg-white text-slate-900 px-8 py-3 rounded-xl font-medium hover:bg-gray-100 hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2"
                 >
                   Registruotis
                   <ArrowRight className="size-5" />
@@ -273,14 +311,14 @@ export default async function EventDetailPage({
 
       {/* Main Content */}
       <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Left Content */}
             <div className="lg:col-span-2 space-y-12">
               {/* Event Description */}
               {event.content && (
                 <div>
-                  <h2 className="text-3xl font-bold mb-6">Apie renginį</h2>
+                  <h2 className="text-3xl font-semibold mb-6">Apie renginį</h2>
                   <article className="prose prose-lg max-w-none">
                     <PortableText value={event.content as any} />
                   </article>
@@ -289,12 +327,14 @@ export default async function EventDetailPage({
 
               {/* Event Program */}
               {event.program && event.program.length > 0 && (
-                <div className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-100 rounded-2xl p-8">
+                <div className="bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-8">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="size-12 bg-gradient-to-br from-[#fe9a00] to-[#e17100] rounded-xl flex items-center justify-center">
+                    <div className="size-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-xl flex items-center justify-center">
                       <Calendar className="size-6 text-white" />
                     </div>
-                    <h2 className="mb-0">Renginio programa</h2>
+                    <h2 className="text-2xl font-semibold mb-0">
+                      Renginio programa
+                    </h2>
                   </div>
                   <div className="space-y-4">
                     {event.program.map((item: any, index: number) => {
@@ -307,11 +347,11 @@ export default async function EventDetailPage({
                       return (
                         <div
                           key={index}
-                          className="bg-white rounded-xl p-4 border border-orange-100"
+                          className="bg-white rounded-xl p-4 border border-slate-100"
                         >
                           <div className="flex items-start gap-4">
                             <div className="text-center shrink-0">
-                              <div className="text-2xl font-medium text-[#fe9a00]">
+                              <div className="text-2xl font-semibold text-slate-700">
                                 {day}
                               </div>
                               <div className="text-sm text-gray-600 capitalize">
@@ -347,13 +387,13 @@ export default async function EventDetailPage({
                   {event.additionalInfo.map((info: any, index: number) => (
                     <div
                       key={index}
-                      className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow"
+                      className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-slate-300 transition-all"
                     >
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="size-10 bg-orange-50 rounded-lg flex items-center justify-center">
-                          <Users className="size-5 text-[#fe9a00]" />
+                        <div className="size-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                          <Users className="size-5 text-slate-600" />
                         </div>
-                        <h3 className="mb-0">{info.title}</h3>
+                        <h3 className="font-semibold mb-0">{info.title}</h3>
                       </div>
                       {info.description && (
                         <p className="text-gray-600 text-sm mb-3">
@@ -364,7 +404,7 @@ export default async function EventDetailPage({
                         <ul className="space-y-2 text-sm text-gray-600">
                           {info.items.map((item: string, i: number) => (
                             <li key={i} className="flex items-center gap-2">
-                              <div className="size-1.5 bg-[#fe9a00] rounded-full" />
+                              <div className="size-1.5 bg-slate-400 rounded-full" />
                               {item}
                             </li>
                           ))}
@@ -378,7 +418,9 @@ export default async function EventDetailPage({
               {/* Documents */}
               {event.documents && event.documents.length > 0 && (
                 <div>
-                  <h2 className="mb-6">Dokumentai ir nuotraukos</h2>
+                  <h2 className="text-2xl font-semibold mb-6">
+                    Dokumentai ir nuotraukos
+                  </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {event.documents.map((doc: any, index: number) => (
                       <a
@@ -387,10 +429,10 @@ export default async function EventDetailPage({
                         download
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl hover:border-[#fe9a00] hover:shadow-md transition-all group"
+                        className="flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-2xl hover:border-slate-300 hover:shadow-md transition-all group"
                       >
-                        <div className="size-12 bg-orange-50 rounded-lg flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-[#fe9a00] group-hover:to-[#e17100] transition-all">
-                          <FileText className="size-6 text-[#fe9a00] group-hover:text-white" />
+                        <div className="size-12 bg-slate-100 rounded-xl flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-slate-700 group-hover:to-slate-800 transition-all">
+                          <FileText className="size-6 text-slate-600 group-hover:text-white" />
                         </div>
                         <div className="flex-1">
                           <div className="font-medium text-gray-900 mb-1">
@@ -400,7 +442,7 @@ export default async function EventDetailPage({
                             {formatFileSize(doc.file?.size)}
                           </div>
                         </div>
-                        <Download className="size-5 text-gray-400 group-hover:text-[#fe9a00]" />
+                        <Download className="size-5 text-gray-400 group-hover:text-slate-700" />
                       </a>
                     ))}
                   </div>
@@ -410,8 +452,8 @@ export default async function EventDetailPage({
               {/* Location Map */}
               {(event.googleMapsLocation || event.location) && (
                 <div>
-                  <h2 className="mb-6">Vieta</h2>
-                  <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                  <h2 className="text-2xl font-semibold mb-6">Vieta</h2>
+                  <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden">
                     <div className="aspect-video bg-gray-100 relative">
                       <GoogleMap
                         address={
@@ -421,17 +463,17 @@ export default async function EventDetailPage({
                     </div>
                     <div className="p-6">
                       <div className="flex items-start gap-4">
-                        <div className="size-12 bg-orange-50 rounded-lg flex items-center justify-center shrink-0">
-                          <MapPin className="size-6 text-[#fe9a00]" />
+                        <div className="size-12 bg-slate-100 rounded-xl flex items-center justify-center shrink-0">
+                          <MapPin className="size-6 text-slate-600" />
                         </div>
                         <div className="flex-1">
-                          <h3 className="mb-2">{event.location}</h3>
+                          <h3 className="font-semibold mb-2">{event.location}</h3>
                           <div className="flex flex-wrap gap-3">
                             <a
                               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.googleMapsLocation || event.location || "")}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-sm text-[#fe9a00] hover:text-[#e17100] flex items-center gap-1"
+                              className="text-sm text-slate-700 hover:text-slate-900 flex items-center gap-1 transition-colors"
                             >
                               Gauti nuorodas
                               <ExternalLink className="size-4" />
@@ -449,8 +491,10 @@ export default async function EventDetailPage({
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {/* Quick Info Card */}
-                <div className="bg-gradient-to-br from-[#fe9a00] to-[#e17100] text-white rounded-2xl p-6 shadow-lg">
-                  <h3 className="mb-6 text-white">Pagrindinė informacija</h3>
+                <div className="bg-gradient-to-br from-slate-700 to-slate-800 text-white rounded-2xl p-6 shadow-lg">
+                  <h3 className="mb-6 text-white font-semibold">
+                    Pagrindinė informacija
+                  </h3>
                   <div className="space-y-4">
                     {event.eventStartDate && (
                       <>
@@ -514,7 +558,7 @@ export default async function EventDetailPage({
                       href={event.registrationUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full mt-6 bg-white text-[#fe9a00] px-6 py-3 rounded-lg font-medium hover:shadow-lg transition-all flex items-center justify-center gap-2"
+                      className="w-full mt-6 bg-white text-slate-800 px-6 py-3 rounded-xl font-medium hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
                     >
                       Registruotis dabar
                       <ArrowRight className="size-5" />
@@ -524,9 +568,9 @@ export default async function EventDetailPage({
 
                 {/* Recent Events */}
                 {filteredRecentEvents && filteredRecentEvents.length > 0 && (
-                  <div className="bg-white border border-gray-200 rounded-xl p-6">
-                    <h3 className="mb-6 flex items-center gap-2">
-                      <Clock className="size-4 text-[#fe9a00]" />
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6">
+                    <h3 className="mb-6 flex items-center gap-2 font-semibold">
+                      <Clock className="size-4 text-slate-600" />
                       Kiti renginiai
                     </h3>
                     <div className="space-y-4">
@@ -538,7 +582,7 @@ export default async function EventDetailPage({
                         >
                           <div className="flex gap-3 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
                             <div className="flex-1 min-w-0">
-                              <p className="text-gray-900 text-sm mb-1 group-hover:text-[#fe9a00] transition-colors line-clamp-2">
+                              <p className="text-gray-900 text-sm mb-1 group-hover:text-slate-700 transition-colors line-clamp-2">
                                 {recentEvent.title}
                               </p>
                               <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -556,17 +600,19 @@ export default async function EventDetailPage({
                 )}
 
                 {/* Contact Info */}
-                {(contactInfo?.address || contactInfo?.phone || contactInfo?.email) && (
-                  <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-xl p-6">
+                {(contactInfo?.address ||
+                  contactInfo?.phone ||
+                  contactInfo?.email) && (
+                  <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-200 rounded-2xl p-6">
                     <div className="flex items-center gap-2 mb-4">
-                      <Info className="size-5 text-[#fe9a00]" />
-                      <h3 className="mb-0">Kontaktai</h3>
+                      <Info className="size-5 text-slate-600" />
+                      <h3 className="font-semibold mb-0">Kontaktai</h3>
                     </div>
                     <div className="space-y-3 text-sm">
                       {contactInfo?.phone && (
                         <a
                           href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
-                          className="flex items-center gap-2 text-gray-600 hover:text-[#fe9a00] transition-colors"
+                          className="flex items-center gap-2 text-gray-600 hover:text-slate-700 transition-colors"
                         >
                           <Phone className="size-4 shrink-0" />
                           <span>{contactInfo.phone}</span>
@@ -575,7 +621,7 @@ export default async function EventDetailPage({
                       {contactInfo?.email && (
                         <a
                           href={`mailto:${contactInfo.email}`}
-                          className="flex items-center gap-2 text-gray-600 hover:text-[#fe9a00] transition-colors"
+                          className="flex items-center gap-2 text-gray-600 hover:text-slate-700 transition-colors"
                         >
                           <Mail className="size-4 shrink-0" />
                           <span>{contactInfo.email}</span>
