@@ -12,10 +12,9 @@ import type { Metadata } from "next";
 import {
   Calendar,
   MapPin,
-  Users,
   Clock,
   Tag,
-  ChevronRight,
+  ArrowLeft,
 } from "lucide-react";
 
 function formatDate(dateString: string) {
@@ -100,7 +99,7 @@ export async function generateMetadata({
       title,
       description,
       type: "article",
-      publishedTime: news.publishedAt,
+      publishedTime: news._createdAt,
       authors: ["KKPDA"],
       images: coverImageUrl
         ? [
@@ -147,66 +146,103 @@ export default async function NewsDetailPage({
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-8 py-4">
+      <div className="bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 border-b border-gray-200/50">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 py-4">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-500 hover:text-gray-700">
+            <Link
+              href="/"
+              className="text-gray-500 hover:text-gray-700 transition-colors"
+            >
               Pradžia
             </Link>
-            <ChevronRight className="size-4 text-gray-400" />
+            <svg
+              className="size-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                d="M5.25 10.5L8.75 7L5.25 3.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.16667"
+              />
+            </svg>
             <Link
               href="/naujienos-ir-renginiai"
-              className="text-gray-500 hover:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 transition-colors"
             >
               Naujienos
             </Link>
-            <ChevronRight className="size-4 text-gray-400" />
-            <span className="text-gray-900">{news.title}</span>
+            <svg
+              className="size-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                d="M5.25 10.5L8.75 7L5.25 3.5"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.16667"
+              />
+            </svg>
+            <span className="text-gray-900 truncate max-w-xs">
+              {news.title}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Article Header */}
-      <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-4xl mx-auto px-8">
-          <div className="mb-6">
-            <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#fe9a00] to-[#e17100] text-white px-4 py-2 rounded-full text-sm font-medium">
-              <Tag className="size-4" />
-              {news.type === "renginys" ? "Renginiai" : "Naujienos"}
-            </span>
-          </div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 pt-8 pb-12 overflow-hidden">
+        {/* Decorative Shapes */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100/30 to-gray-100/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-gradient-to-tr from-gray-200/20 to-transparent rounded-full blur-2xl" />
+        <div className="absolute top-1/2 right-1/4 w-32 h-32 border-2 border-gray-200/40 rounded-2xl rotate-12" />
+        <div className="absolute bottom-8 right-12 w-24 h-24 border-2 border-blue-200/30 rounded-full" />
 
-          <h1 className="mb-6 text-5xl lg:text-6xl text-gray-900">
-            {news.title}
-          </h1>
-
-          <div className="flex items-center gap-6 text-gray-600 mb-8">
-            <div className="flex items-center gap-2">
-              <Calendar className="size-5 text-[#fe9a00]" />
-              <span>
-                {news.type === "renginys" && news.eventStartDate
-                  ? formatEventTime(news.eventStartDate, news.eventEndDate)
-                  : formatDate(news.publishedAt)}
+        <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
+          <div className="max-w-4xl">
+            <div className="mb-6">
+              <span className="inline-flex items-center gap-2 bg-gradient-to-r from-slate-700 to-slate-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+                <Tag className="size-4" />
+                {news.type === "renginys" ? "Renginys" : "Naujiena"}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="size-5 text-[#fe9a00]" />
-              <span>{readingTime} min skaitymo</span>
-            </div>
-          </div>
 
-          <ShareButtons
-            title={news.title}
-            description={createExcerpt(news.content as any, 160)}
-          />
+            <h1 className="mb-6 text-4xl md:text-5xl lg:text-6xl text-gray-900">
+              {news.title}
+            </h1>
+
+            <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8">
+              <div className="flex items-center gap-2">
+                <Calendar className="size-5 text-slate-600" />
+                <span>
+                  {news.type === "renginys" && news.eventStartDate
+                    ? formatEventTime(news.eventStartDate, news.eventEndDate)
+                    : formatDate(news._createdAt)}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="size-5 text-slate-600" />
+                <span>{readingTime} min skaitymo</span>
+              </div>
+            </div>
+
+            <ShareButtons
+              title={news.title}
+              description={createExcerpt(news.content as any, 160)}
+            />
+          </div>
         </div>
       </section>
 
       {/* Featured Image */}
       {news.coverImage?.asset?.url && (
         <section className="py-8 bg-white">
-          <div className="max-w-5xl mx-auto px-8">
-            <div className="rounded-2xl overflow-hidden shadow-xl">
+          <div className="max-w-5xl mx-auto px-8 lg:px-12">
+            <div className="rounded-3xl overflow-hidden shadow-xl">
               <Image
                 src={news.coverImage.asset.url}
                 alt={`${news.title} nuotrauka`}
@@ -221,20 +257,20 @@ export default async function NewsDetailPage({
 
       {/* Article Content & Sidebar */}
       <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-8 lg:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
             <div className="lg:col-span-2">
               {/* Event Information */}
               {news.type === "renginys" && (
-                <div className="mb-8 bg-gradient-to-br from-orange-50 to-white border border-orange-100 rounded-2xl p-6">
+                <div className="mb-8 bg-gradient-to-br from-slate-50 to-white border border-slate-200 rounded-2xl p-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-4">
                     Renginio informacija
                   </h3>
                   <div className="space-y-3">
                     {news.eventStartDate && (
                       <div className="flex items-start gap-3">
-                        <Calendar className="size-5 text-[#fe9a00] mt-0.5 shrink-0" />
+                        <Calendar className="size-5 text-slate-600 mt-0.5 shrink-0" />
                         <div>
                           <div className="text-sm font-medium text-gray-700">
                             Laikas
@@ -250,7 +286,7 @@ export default async function NewsDetailPage({
                     )}
                     {news.location && (
                       <div className="flex items-start gap-3">
-                        <MapPin className="size-5 text-[#fe9a00] mt-0.5 shrink-0" />
+                        <MapPin className="size-5 text-slate-600 mt-0.5 shrink-0" />
                         <div>
                           <div className="text-sm font-medium text-gray-700">
                             Vieta
@@ -259,20 +295,6 @@ export default async function NewsDetailPage({
                         </div>
                       </div>
                     )}
-                    {news.organizers &&
-                      (news.organizers as string[])?.length > 0 && (
-                        <div className="flex items-start gap-3">
-                          <Users className="size-5 text-[#fe9a00] mt-0.5 shrink-0" />
-                          <div>
-                            <div className="text-sm font-medium text-gray-700">
-                              Organizatoriai
-                            </div>
-                            <div className="text-gray-900">
-                              {(news.organizers as string[])?.join(", ")}
-                            </div>
-                          </div>
-                        </div>
-                      )}
                   </div>
                 </div>
               )}
@@ -284,9 +306,10 @@ export default async function NewsDetailPage({
               <div className="mt-12 pt-8 border-t border-gray-200">
                 <Link
                   href="/naujienos-ir-renginiai"
-                  className="inline-flex items-center text-[#fe9a00] hover:text-[#e17100] transition-colors font-medium"
+                  className="inline-flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors font-medium group"
                 >
-                  ← Grįžti į naujienas
+                  <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                  Grįžti į naujienas
                 </Link>
               </div>
             </div>
@@ -308,7 +331,7 @@ export default async function NewsDetailPage({
       {news.type === "renginys" &&
         (news.googleMapsLocation || news.location) && (
           <section className="bg-white pb-12">
-            <div className="max-w-7xl mx-auto px-8">
+            <div className="max-w-7xl mx-auto px-8 lg:px-12">
               <GoogleMap
                 address={news.googleMapsLocation || news.location || ""}
               />
