@@ -21,7 +21,6 @@ export default async function NaujienosPage() {
         <div className="absolute top-8 left-1/2 w-16 h-16 bg-gray-300/10 rounded-lg rotate-45" />
 
         <div className="max-w-7xl mx-auto px-8 lg:px-12 relative">
-          {/* Breadcrumb */}
           <div className="flex items-center gap-2 mb-8 text-gray-500">
             <Link href="/" className="hover:text-gray-700 transition-colors">
               Pradžia
