@@ -62,8 +62,10 @@ export default async function Page() {
     sanityFetch({ query: contactInfoQuery }),
   ]);
 
-  const misija = apieKkpdaData?.misija;
-  const vizija = apieKkpdaData?.vizija;
+  const metuPatirtisAprasymas = apieKkpdaData?.metuPatirtisAprasymas;
+  const asociacijosNariaiAprasymas = apieKkpdaData?.asociacijosNariaiAprasymas;
+  const misija = apieKkpdaData?.misija || '';
+  const vizija = apieKkpdaData?.vizija || '';
 
   // Calculate full years of activity since 1989-12-22
   const now = new Date();
@@ -109,6 +111,8 @@ export default async function Page() {
       <OrganizationFacts
         yearsOfActivity={yearsOfActivity}
         membersCount={membersCount || 0}
+        metuPatirtisAprasymas={metuPatirtisAprasymas ?? undefined}
+        asociacijosNariaiAprasymas={asociacijosNariaiAprasymas ?? undefined}
         misija={misija ?? undefined}
         vizija={vizija ?? undefined}
       />

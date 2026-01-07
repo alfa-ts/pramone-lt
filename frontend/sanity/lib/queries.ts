@@ -6,8 +6,10 @@ export const apieKkpdaQuery = defineQuery(`
     kaAtstovaujame,
     musuMisija,
     musuVizija,
-    misija,
-    vizija,
+    metuPatirtisAprasymas,
+    asociacijosNariaiAprasymas,
+    "misija": pt::text(musuMisija),
+    "vizija": pt::text(musuVizija),
     strateginesVeiklosKryptys[] {
       _key,
       title
