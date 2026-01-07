@@ -13,7 +13,7 @@ interface OrganizationFactsProps {
 export function OrganizationFacts({ yearsOfActivity, membersCount, misija, vizija }: OrganizationFactsProps) {
   const facts = [
     {
-      number: `${yearsOfActivity}+`,
+      number: `${yearsOfActivity}`,
       title: 'Metų patirtis',
       description: '1989 m. gruodžio 22 d. buvo įsteigta Kauno pramonininkų asociacija. Per šį laikotarpį tapome viena įtakingiausių verslo organizacijų.',
       link: '/apie/istorija',
