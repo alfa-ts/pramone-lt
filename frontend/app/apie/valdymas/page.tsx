@@ -166,11 +166,8 @@ export default async function ValdymasPage() {
                   <div className="relative aspect-[4/5]">
                     <Image
                       src={
-                        (urlForImage(president.photo)
-                          ?.width(800)
-                          .height(1000)
-                          .fit("crop")
-                          .url() as string) || "/placeholder.jpg"
+                        (urlForImage(president.photo)?.url() as string) ||
+                        "/placeholder.jpg"
                       }
                       alt={`${president.name} nuotrauka`}
                       fill
@@ -247,11 +244,8 @@ export default async function ValdymasPage() {
                     <div className="relative size-full">
                       <Image
                         src={
-                          (urlForImage(member.photo)
-                            ?.width(600)
-                            .height(600)
-                            .fit("crop")
-                            .url() as string) || "/placeholder.jpg"
+                          (urlForImage(member.photo)?.url() as string) ||
+                          "/placeholder.jpg"
                         }
                         alt={`${member.name} nuotrauka`}
                         fill
@@ -261,7 +255,9 @@ export default async function ValdymasPage() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <h4 className="text-lg text-gray-900 mb-2">{member.name}</h4>
+                    <h4 className="text-lg text-gray-900 mb-2">
+                      {member.name}
+                    </h4>
                     <p className="text-gray-500 mb-6 text-sm">
                       {member.position}
                     </p>
@@ -321,11 +317,8 @@ export default async function ValdymasPage() {
                     <div className="relative size-full">
                       <Image
                         src={
-                          (urlForImage(member.photo)
-                            ?.width(500)
-                            .height(500)
-                            .fit("crop")
-                            .url() as string) || "/placeholder.jpg"
+                          (urlForImage(member.photo)?.url() as string) ||
+                          "/placeholder.jpg"
                         }
                         alt={`${member.name} nuotrauka`}
                         fill
@@ -391,11 +384,8 @@ export default async function ValdymasPage() {
                     <div className="relative size-full">
                       <Image
                         src={
-                          (urlForImage(member.photo)
-                            ?.width(500)
-                            .height(500)
-                            .fit("crop")
-                            .url() as string) || "/placeholder.jpg"
+                          (urlForImage(member.photo)?.url() as string) ||
+                          "/placeholder.jpg"
                         }
                         alt={`${member.name} nuotrauka`}
                         fill
